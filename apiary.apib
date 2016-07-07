@@ -1,0 +1,358 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# StruggleOfMinds
+## User [/user]
+### User authorization [GET /user/auth{?login}]
+
++ Response 200 (application/json)
+
+            {
+                "success": true,
+                "uid": 100,
+                "token":"564FD13443234532xDFDS32",
+                "error":
+                [
+                {
+                    "code":404,
+                    "message":"Message"
+                }
+                ]
+            }
+### User info [GET /user/{?uid}]
+
++ Response 200 (application/json)
+
+            {
+                "uid": 100,
+                "nickname": "xevilboss",
+                "isOnline": true,
+                "rating": 3000,
+                "questionRating":200,
+                "avatarId": 12,
+                "error":
+                [
+                {
+                    "code":404,
+                    "message":"Message"
+                }
+                ]
+            }
+            
+### Set user avatar [GET /user/avatar{?uid}&{?avatarId}]
+
++ Response 200 (application/json)
+
+            {
+                "success":true,
+                "error":
+                [
+                {
+                    "code":404,
+                    "message":"Message"
+                }
+                ]
+            }
+## Games [/game]           
+### Game info [GET /game/{?id}]
+В каждой игровой сессии 5 раундов и в каждом раунде по 3 вопроса. 
+В примере игровая сессия с незаконченным первым раундом.
++ Response 200 (application/json)
+
+                {
+                  "Id": 1,
+                  "owner": 
+                    {
+                        "uid": 100,
+                        "nickname": "xevilboss",
+                        "rating": 3000,
+                        "questionRating":200,
+                        "avatarId": 12
+                    },
+                  "opponent":
+                    {
+                        "uid": 101,
+                        "nickname": "strykalo",
+                        "rating": 5000,
+                        "questionRating":500,
+                        "avatarId": 3
+                    },
+                  "ownerScore":10,
+                  "opponentScore":1,
+                  "isFinished":false,
+                  "rounds":
+                    [
+                        {   
+                            "id":1,
+                            "isFinished":false,
+                            "roundSubject":"История",
+                            "questions":
+                                [
+                                    {
+                                        "id":145,
+                                        "questionDescription":"Кто убил Кеннеди?",
+                                        "answers":
+                                            [
+                                                {
+                                                    "answer":"Стрыкало"
+                                                },
+                                                {
+                                                    "answer":"Путин"
+                                                },
+                                                {
+                                                    "answer":"Янукович"
+                                                },
+                                                {
+                                                    "answer":"Порошенко"
+                                                }
+                                            ],
+                                        "correctAnswerId":0,
+                                        "ownerAnswerId":0,
+                                        "opponentAnswerId":3
+                                    },
+                                    {
+                                        "id":51,
+                                        "questionDescription":"Вопрос 2",
+                                        "answers":
+                                            [
+                                                {
+                                                    "answer":"1"
+                                                },
+                                                {
+                                                    "answer":"2"
+                                                },
+                                                {
+                                                    "answer":"3"
+                                                },
+                                                {
+                                                    "answer":"4"
+                                                }
+                                            ],
+                                        "correctAnswerId":1,
+                                        "ownerAnswerId":0,
+                                        "opponentAnswerId":3
+                                    },
+                                    {
+                                        "id":36,
+                                        "questionDescription":"Вопрос 3",
+                                        "answers":
+                                            [
+                                                {
+                                                    "answer":"1"
+                                                },
+                                                {
+                                                    "answer":"2"
+                                                },
+                                                {
+                                                    "answer":"3"
+                                                },
+                                                {
+                                                    "answer":"4"
+                                                }
+                                            ],
+                                        "correctAnswerId":2,
+                                        "ownerAnswerId":null,
+                                        "opponentAnswerId":null
+                                    }
+                                ]    
+                        }
+                    ],
+                "error":
+                [
+                {
+                    "code":404,
+                    "message":"Message"
+                }
+                ]
+            }
+
+### User answer [GET /game/answer{?id}&{?uid}&{?roundId}&{?questionId}&{?answerId}]
+Пользователь дает ответ на один из вопросов.
++ Response 200 (application/json)
+
+        {
+            "success":true,
+            "error":
+                [
+                    {
+                        "code":404,
+                        "message":"Message"
+                    }
+                ]
+        }
+        
+### Surrender [GET /game/surrender{?gameId}&{?uid}]
++ Response 200 (application/json)
+
+            {
+                "success":true,
+                "error":
+                [
+                {
+                    "code":404,
+                    "message":"Message"
+                }
+                ]
+            }
+### Search for opponent [GET /game/opponent_search{?search_arg}]
++ Response 200 (application/json)
+
+        {
+            "opponents":
+                    [
+                        {
+                            "uid": 101,
+                            "nickname": "strykalo",
+                            "rating": 5000,
+                            "questionRating":500,
+                            "avatarId": 3
+                        }
+                    ],
+            "error":
+                    [
+                        {
+                            "code":404,
+                            "message":"Message"
+                        }
+                    ]
+            }
+
+### Game Start [GET /game/start{?uid}&{?opponentId}]
++ Response 200 (application/json)
+
+            {
+                 "Id": 2,
+                 "owner": 
+                    {
+                        "uid": 100,
+                        "nickname": "xevilboss",
+                        "rating": 3000,
+                        "questionRating":200,
+                        "avatarId": 12
+                    },
+                  "opponent":
+                    {
+                        "uid": 101,
+                        "nickname": "strykalo",
+                        "rating": 5000,
+                        "questionRating":500,
+                        "avatarId": 3
+                    },
+                  "ownerScore":0,
+                  "opponentScore":0,
+                  "isFinished":false,
+                  "rounds":[],
+                "error":
+                [
+                {
+                    "code":404,
+                    "message":"Message"
+                }
+                ]
+            }
+
+## Questions [/question]        
+### New question from user [POST /question/add]
+Правильный ответ всегда первый.
++ Request (application/json)
+
+        {
+            "questionDescription":"Вопрос 2",
+            "answers":
+                    [
+                        {
+                            "answer":"1"
+                        },
+                        {
+                            "answer":"2"
+                        },
+                        {
+                            "answer":"3"
+                        },
+                        {
+                            "answer":"4"
+                        }
+                     ]
+        }
++ Response 201 (application/json)
+
+    + Body
+    
+            {
+                "success":true
+                "error":
+                [
+                {
+                    "code":404,
+                    "message":"Message"
+                }
+                ]
+            }
+
+### Error message in question [POST /question/error{?questionId}]
+errorType - поле в котором указан код ошибки в вопросе:
+0 - Ошибка данных;
+1 - Орфографическая ошибка;
+2 - Неправильная категория;
+3 - Неудовлетворительное содержание.
++ Request (application/json)
+
+        {
+            "errorType":0,
+            "comment":"Не правильный ответ"
+        }
++ Response 201 (application/json)
+
+    + Body
+    
+            {
+                "success":true
+                "error":
+                [
+                {
+                    "code":404,
+                    "message":"Message"
+                }
+                ]
+            }
+
+## Rating [/rating]           
+### Rating list [GET /rating]
+
++ Response 200 (application/json)
+
+            {
+                "ratingList":
+                [
+                    {"username":"xevilboss", "rating":3000},
+                    {"username":"testUser", "rating":2500}
+                ],
+                "success":true,
+                "error":
+                [
+                {
+                    "code":404,
+                    "message":"Message"
+                }
+                ]
+            }
+            
+### Rating list question writers [GET /rating/questions]
+
++ Response 200 (application/json)
+
+            {
+                "ratingList":
+                [
+                    {"username":"xevilboss", "rating":200},
+                    {"username":"testUser", "rating":100}
+                ],
+                "success":true,
+                "error":
+                [
+                {
+                    "code":404,
+                    "message":"Message"
+                }
+                ]
+            }
